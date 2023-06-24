@@ -1,0 +1,15 @@
+name: 'Filter matrix config'
+description: 'Filters matrix map with a list of keys'
+inputs:
+  filter:
+    description: 'Key list'
+    required: true
+  matrix:
+    description: 'Input matrix map'
+    required: true
+outputs:
+  matrix:
+    description: 'Filtered matrix config property'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

@@ -1,0 +1,12 @@
+{
+  "name": "filter-matrix-config",
+  "version": "0.0.2",
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
+  "description": "Filters a matrix map, given a list of keys",
+  "devDependencies": {},
+  "scripts": {
+    "package": "ncc build --source-map"
+  }
+}
+
