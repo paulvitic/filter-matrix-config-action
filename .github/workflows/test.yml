@@ -17,9 +17,12 @@ jobs:
           npm run all
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.filter.outputs.matrix }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        id: filter
         with:
           filter: |
             ["terraform-auth0", "terraform-aws-iam"]
