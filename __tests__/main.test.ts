@@ -33,6 +33,7 @@ describe('run', () => {
         }
       }
     )
+    const logSpy = jest.spyOn(console, 'log')
 
     // Act
     run()
@@ -43,7 +44,7 @@ describe('run', () => {
     expect(core.setOutput).toHaveBeenCalledWith('matrix', {
       config: ['value1', 'value2']
     })
-    expect(console.log).toHaveBeenCalledWith(
+    expect(logSpy).toHaveBeenCalledWith(
       `filtered matrix:\n${JSON.stringify({config: ['value1', 'value2']})}`
     )
     expect(core.setFailed).not.toHaveBeenCalled()
@@ -60,7 +61,7 @@ describe('run', () => {
 
     // Assert
     expect(core.getInput).toHaveBeenCalledWith('matrix', {required: true})
-    expect(core.getInput).toHaveBeenCalledWith('filter', {required: true})
+    expect(core.getInput).not.toHaveBeenCalledWith('filter', {required: true})
     expect(core.setOutput).not.toHaveBeenCalled()
     expect(console.log).not.toHaveBeenCalled()
     expect(core.setFailed).toHaveBeenCalledWith('Invalid input')
