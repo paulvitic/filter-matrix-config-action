@@ -1,11 +1,15 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Filter matrix config'
+description: 'Filters matrix map with a list of keys'
 inputs:
-  milliseconds: # change this
+  filter:
+    description: 'Key list'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  matrix:
+    description: 'Input matrix map'
+    required: true
+outputs:
+  matrix:
+    description: 'Filtered matrix config property'
 runs:
   using: 'node16'
   main: 'dist/index.js'
