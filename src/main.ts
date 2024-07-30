@@ -5,9 +5,8 @@ export function run(): void {
     const inputMatrix: object = JSON.parse(
       core.getInput('matrix', {required: true})
     )
-    const filter: string[] = JSON.parse(
-      core.getInput('filter')
-    )
+    const filterInput = core.getInput('filter', {required: false})
+    const filter: string[] = filterInput ? JSON.parse(filterInput) : []
     const config: object[] = []
     if (!filter) {
       console.log(`no filter provided, returning empty matrix`)

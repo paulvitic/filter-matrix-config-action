@@ -35,11 +35,17 @@ const core = __importStar(__nccwpck_require__(186));
 function run() {
     try {
         const inputMatrix = JSON.parse(core.getInput('matrix', { required: true }));
-        const filter = JSON.parse(core.getInput('filter', { required: true }));
+        const filterInput = core.getInput('filter', { required: false });
+        const filter = filterInput ? JSON.parse(filterInput) : [];
         const config = [];
-        for (const [key, value] of Object.entries(inputMatrix)) {
-            if (filter.includes(key)) {
-                config.push(value);
+        if (!filter) {
+            console.log(`no filter provided, returning empty matrix`);
+        }
+        else {
+            for (const [key, value] of Object.entries(inputMatrix)) {
+                if (filter.includes(key)) {
+                    config.push(value);
+                }
             }
         }
         core.setOutput('matrix', { config });

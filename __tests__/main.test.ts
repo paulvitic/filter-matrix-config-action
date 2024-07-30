@@ -28,7 +28,7 @@ describe('run', () => {
       (name: string, {required}: InputOptions) => {
         if (name === 'matrix' && required) {
           return JSON.stringify(inputMatrix)
-        } else if (name === 'filter' && required) {
+        } else if (name === 'filter') {
           return JSON.stringify(filter)
         }
       }
@@ -40,7 +40,6 @@ describe('run', () => {
 
     // Assert
     expect(core.getInput).toHaveBeenCalledWith('matrix', {required: true})
-    expect(core.getInput).toHaveBeenCalledWith('filter', {required: true})
     expect(core.setOutput).toHaveBeenCalledWith('matrix', {
       config: ['value1', 'value2']
     })
@@ -61,9 +60,36 @@ describe('run', () => {
 
     // Assert
     expect(core.getInput).toHaveBeenCalledWith('matrix', {required: true})
-    expect(core.getInput).not.toHaveBeenCalledWith('filter', {required: true})
     expect(core.setOutput).not.toHaveBeenCalled()
     expect(console.log).not.toHaveBeenCalled()
     expect(core.setFailed).toHaveBeenCalledWith('Invalid input')
+  })
+
+  it('should should return empty matrix when no filter is provided', () => {
+    const inputMatrix = {key1: 'value1', key2: 'value2', key3: 'value3'}
+
+    core.getInput.mockImplementation(
+      (name: string, {required}: InputOptions) => {
+        if (name === 'matrix' && required) {
+          return JSON.stringify(inputMatrix)
+        } else if (name === 'filter') {
+          return undefined
+        }
+      }
+    )
+    const logSpy = jest.spyOn(console, 'log')
+
+    // Act
+    run()
+
+    // Assert
+    expect(core.getInput).toHaveBeenCalledWith('matrix', {required: true})
+    expect(core.setOutput).toHaveBeenCalledWith('matrix', {
+      config: []
+    })
+    expect(logSpy).toHaveBeenCalledWith(
+      `filtered matrix:\n${JSON.stringify({config: []})}`
+    )
+    expect(core.setFailed).not.toHaveBeenCalled()
   })
 })
