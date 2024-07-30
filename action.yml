@@ -3,7 +3,6 @@ description: 'Filters matrix map with a list of keys'
 inputs:
   filter:
     description: 'Key list'
-    required: true
   matrix:
     description: 'Input matrix map'
     required: true

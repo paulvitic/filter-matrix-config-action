@@ -6,12 +6,16 @@ export function run(): void {
       core.getInput('matrix', {required: true})
     )
     const filter: string[] = JSON.parse(
-      core.getInput('filter', {required: true})
+      core.getInput('filter')
     )
     const config: object[] = []
-    for (const [key, value] of Object.entries(inputMatrix)) {
-      if (filter.includes(key)) {
-        config.push(value)
+    if (!filter) {
+      console.log(`no filter provided, returning empty matrix`)
+    } else {
+      for (const [key, value] of Object.entries(inputMatrix)) {
+        if (filter.includes(key)) {
+          config.push(value)
+        }
       }
     }
     core.setOutput('matrix', {config})
